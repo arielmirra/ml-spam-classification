@@ -6,6 +6,7 @@ import numpy as np
 
 import util
 import svm
+import re
 
 
 def get_words(message):
@@ -22,7 +23,8 @@ def get_words(message):
     Returns:
        The list of normalized words from the message.
     """
-    return
+    words = map(lambda w: w.lower(), re.split('\W+', message))
+    return list(filter(lambda w: len(w) > 0, words))
 
 
 def create_dictionary(messages):
@@ -40,7 +42,26 @@ def create_dictionary(messages):
     Returns:
         A python dict mapping words to integers.
     """
-    return
+    # collect words by appearance in messages
+    # filter by appearances > 4
+    # make a dict
+    messages_words = map(lambda m: get_words(m), messages)
+    dictionary = {}
+    for words in messages_words:
+        for w in words:
+            if w in dictionary:
+                value = dictionary[w]
+                dictionary[w] = value + 1
+            else:
+                dictionary[w] = 1
+
+    valuable_words = dict(filter(lambda item: item[1] > 4, dictionary.items()))
+
+    result = {}
+    for i, item in enumerate(valuable_words):
+        result[item] = i
+
+    return result
 
 
 def transform_text(messages, word_dictionary):
@@ -181,4 +202,10 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    message1 = "hello there"
+    message2 = "general kenoby"
+    message3 = "not going to get in final dictionary"
+
+    messages = [message1, message2, message1, message2, message1, message2, message1, message2, message1, message2,
+                message3]
+    print(create_dictionary(messages))
