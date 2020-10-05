@@ -84,7 +84,14 @@ def transform_text(messages, word_dictionary):
         Where the component (i,j) is the number of occurrences of the
         j-th vocabulary word in the i-th message.
     """
-    return
+
+    array = np.zeros(shape=(len(messages), len(word_dictionary)))
+
+    for j, word in enumerate(word_dictionary):
+        for i, message in enumerate(messages):
+            array[i][j] = get_words(message).count(word)
+
+    return array
 
 
 def fit_naive_bayes_model(matrix, labels):
@@ -208,4 +215,5 @@ if __name__ == "__main__":
 
     messages = [message1, message2, message1, message2, message1, message2, message1, message2, message1, message2,
                 message3]
-    print(create_dictionary(messages))
+    dict = create_dictionary(messages)
+    print(transform_text(messages, dict))
