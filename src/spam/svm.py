@@ -1,6 +1,7 @@
 # Important note: you do not have to modify this file for your homework.
 
 import numpy as np
+
 np.random.seed(123)
 
 

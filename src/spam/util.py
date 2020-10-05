@@ -20,6 +20,7 @@ def add_intercept_fn(x):
 
     return new_x
 
+
 def load_csv(csv_path, label_col='y', add_intercept=False):
     """Load dataset from a CSV file.
 
@@ -51,6 +52,7 @@ def load_csv(csv_path, label_col='y', add_intercept=False):
 
     return inputs, labels
 
+
 def load_spam_dataset(tsv_path):
     """Load the spam dataset from a TSV file
 
@@ -73,6 +75,7 @@ def load_spam_dataset(tsv_path):
             labels.append(1 if label == 'spam' else 0)
 
     return messages, np.array(labels)
+
 
 def plot(x, y, theta, save_path, correction=1.0):
     """Plot dataset and fitted logistic regression parameters.
@@ -111,13 +114,15 @@ def plot_contour(predict_fn):
 
     plt.contourf(x, y, z, levels=[-float('inf'), 0, float('inf')], colors=['orange', 'cyan'])
 
+
 def plot_points(x, y):
     """Plot some points where x are the coordinates and y is the label"""
     x_one = x[y == 0, :]
     x_two = x[y == 1, :]
 
-    plt.scatter(x_one[:,0], x_one[:,1], marker='x', color='red')
-    plt.scatter(x_two[:,0], x_two[:,1], marker='o', color='blue')
+    plt.scatter(x_one[:, 0], x_one[:, 1], marker='x', color='red')
+    plt.scatter(x_two[:, 0], x_two[:, 1], marker='o', color='blue')
+
 
 def write_json(filename, value):
     """Write the provided value as JSON to the given filename"""

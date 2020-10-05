@@ -28,7 +28,6 @@ if __name__ == '__main__':
         for line in train_items:
             writer.writerow(line)
 
-
     with open('../data/ds2_val.tsv', 'w', newline='', encoding='utf-8') as val_output:
         writer = csv.writer(val_output, delimiter='\t')
         for line in val_items:

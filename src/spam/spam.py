@@ -22,7 +22,7 @@ def get_words(message):
     Returns:
        The list of normalized words from the message.
     """
-    return 
+    return
 
 
 def create_dictionary(messages):
@@ -40,7 +40,8 @@ def create_dictionary(messages):
     Returns:
         A python dict mapping words to integers.
     """
-    return 
+    return
+
 
 def transform_text(messages, word_dictionary):
     """Transform a list of text messages into a numpy array for further processing.
@@ -82,6 +83,7 @@ def fit_naive_bayes_model(matrix, labels):
     """
     return
 
+
 def predict_from_naive_bayes_model(model, matrix):
     """Use a Naive Bayes model to compute predictions for a target matrix.
 
@@ -94,7 +96,7 @@ def predict_from_naive_bayes_model(model, matrix):
 
     Returns: A numpy array containg the predictions from the model
     """
-    return 
+    return
 
 
 def get_top_five_naive_bayes_words(model, dictionary):
@@ -110,7 +112,6 @@ def get_top_five_naive_bayes_words(model, dictionary):
     Returns: A list of the top five most indicative words in sorted order with the most indicative first
     """
     return
-   
 
 
 def compute_best_svm_radius(train_matrix, train_labels, val_matrix, val_labels, radius_to_consider):
@@ -129,7 +130,7 @@ def compute_best_svm_radius(train_matrix, train_labels, val_matrix, val_labels, 
     Returns:
         The best radius which maximizes SVM accuracy.
     """
-    return 
+    return
 
 
 def main():
@@ -145,7 +146,7 @@ def main():
 
     train_matrix = transform_text(train_messages, dictionary)
 
-    np.savetxt('spam_sample_train_matrix', train_matrix[:100,:])
+    np.savetxt('spam_sample_train_matrix', train_matrix[:100, :])
 
     val_matrix = transform_text(val_messages, dictionary)
     test_matrix = transform_text(test_messages, dictionary)
