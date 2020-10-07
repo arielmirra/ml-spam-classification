@@ -4,8 +4,9 @@ from collections import defaultdict
 
 import numpy as np
 
-import util
-import svm
+from src.spam import util
+from src.spam import svm
+
 import re
 
 
