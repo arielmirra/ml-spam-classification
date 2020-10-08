@@ -110,7 +110,40 @@ def fit_naive_bayes_model(matrix, labels):
 
     Returns: The trained model
     """
-    return
+
+    # join every matrix row with it's label
+    def make_dataset(matrix, labels):
+        dataset = []
+        for i, row in enumerate(matrix):
+            dataset.append(row + labels[i])
+        return dataset
+
+    # split the dataset by class values, returns a dictionary
+    def separate_by_class(dataset):
+        separated = dict()
+        for i in range(len(dataset)):
+            vector = dataset[i]
+            class_value = vector[-1]
+            if (class_value not in separated):
+                separated[class_value] = list()
+            separated[class_value].append(vector)
+        return separated
+
+    # Calculate the mean, stdev and count for each column in a dataset
+    def summarize_dataset(dataset):
+        summaries = [(util.mean(column), util.stdev(column), len(column)) for column in zip(*dataset)]
+        del (summaries[-1])
+        return summaries
+
+    # Split dataset by class then calculate statistics for each row
+    def summarize_by_class(dataset):
+        separated = separate_by_class(dataset)
+        summaries = dict()
+        for class_value, rows in separated.items():
+            summaries[class_value] = summarize_dataset(rows)
+        return summaries
+
+    return summarize_by_class(make_dataset(matrix, labels))
 
 
 def predict_from_naive_bayes_model(model, matrix):
@@ -123,9 +156,31 @@ def predict_from_naive_bayes_model(model, matrix):
         model: A trained model from fit_naive_bayes_model
         matrix: A numpy array containing word counts
 
-    Returns: A numpy array containg the predictions from the model
+    Returns: A numpy array containing the predictions from the model
     """
-    return
+
+    def calculate_class_probabilities(summaries, row):
+        total_rows = sum([summaries[label][0][2] for label in summaries])
+        probabilities = dict()
+        for class_value, class_summaries in summaries.items():
+            probabilities[class_value] = summaries[class_value][0][2] / float(total_rows)  # belongs to class i
+            for i in range(len(class_summaries)):
+                mean, stdev, count = class_summaries[i]
+                probabilities[class_value] *= util.calculate_probability(row[i], mean, stdev)  # has j attribute
+        return probabilities
+
+    # map rows to probabilities
+    # flatmap to winning class
+
+    predictions = np.zeros(shape=len(matrix))
+    for i, sms in enumerate(matrix):
+        probability = calculate_class_probabilities(model, sms)  # {0: number, 1: number}
+        if probability[0] > probability[1]:
+            predictions[i] = 0
+        else:
+            predictions[i] = 1
+
+    return predictions
 
 
 def get_top_five_naive_bayes_words(model, dictionary):
@@ -210,11 +265,4 @@ def main():
 
 
 if __name__ == "__main__":
-    message1 = "hello there"
-    message2 = "general kenoby"
-    message3 = "not going to get in final dictionary"
-
-    messages = [message1, message2, message1, message2, message1, message2, message1, message2, message1, message2,
-                message3]
-    dict = create_dictionary(messages)
-    print(transform_text(messages, dict))
+    main()

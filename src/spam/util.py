@@ -1,4 +1,5 @@
 import csv
+from math import sqrt, exp, pi
 
 import matplotlib.pyplot as plt
 import numpy as np
@@ -128,3 +129,21 @@ def write_json(filename, value):
     """Write the provided value as JSON to the given filename"""
     with open(filename, 'w') as f:
         json.dump(value, f)
+
+
+def mean(numbers):
+    return sum(numbers) / float(len(numbers))
+
+
+# Calculate the standard deviation of a list of numbers
+def stdev(numbers):
+    avg = mean(numbers)
+    variance = sum([(x - avg) ** 2 for x in numbers]) / float(len(numbers) - 1)
+    return sqrt(variance)
+
+
+# Gaussian Probability Distribution Function: f(x) = (1 / sqrt(2 * PI) * sigma) * exp(-((x-mean)^2 / (2 * sigma^2)))
+# Calculate the Gaussian probability distribution function for x
+def calculate_probability(x, mean, stdev):
+    exponent = exp(-((x - mean) ** 2 / (2 * (stdev + 0.0001) ** 2)))  # st. dev. was added an additional 0.0001 to avoid
+    return (1 / (sqrt(2 * pi) * (stdev + 0.0001))) * exponent         # division by 0
