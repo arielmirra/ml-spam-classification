@@ -230,8 +230,7 @@ def compute_best_svm_radius(train_matrix, train_labels, val_matrix, val_labels, 
     best_accuracy = 0
     for i, radius in enumerate(radius_to_consider):
         predicted_labels = svm.train_and_predict_svm(train_matrix, train_labels, val_matrix, radius)
-        predictions = list(map(lambda p, r: 1 if p == r else 0, predicted_labels, val_labels))
-        accuracy = util.mean(predictions)
+        accuracy = np.mean(predicted_labels == val_labels)
         if accuracy > best_accuracy:
             best_radius = radius
             best_accuracy = accuracy
