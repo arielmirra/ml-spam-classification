@@ -1,4 +1,4 @@
-name: XCS229
+name: spam-classifier-env
 channels:
   - defaults
 dependencies:
